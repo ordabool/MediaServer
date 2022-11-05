@@ -16,7 +16,7 @@ Aside from Jellyfin, the following tools are included:
 ## Setup guide
 
 1. Clone this repo into a folder that will later contain all of the media (Make sure you have enough free space)
-1. Edit the `.env` file and change the `PUID` and `PGID` values into the results of `id $user` command (Optional: you can also change the paths and timezone here)
+1. Copy the `.env.example` into your own `.env` file. Edit the `.env` file and change the `PUID` and `PGID` values into the results of `id $user` command (Optional: you can also change the paths and timezone here)
 1. Open a terminal, change into the cloned directory and run `docker-compose up` (Make sure you have docker installed)
 1. Visit http://localhost:8989, go to the 'Settings' tab, 'General' and type `/tv` into 'URL Base'. Then click 'Save Changes', and 'Restart Now'
    ![URL Base Instructions](./images/url_base.png)

@@ -1,6 +1,6 @@
 .vscode
+.DS_Store
 config
 downloads
 movies
 tv
-.DS_Store
