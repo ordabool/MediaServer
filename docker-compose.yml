@@ -59,7 +59,7 @@ services:
     volumes:
       - ${BAZARR_CONFIG_PATH}:/config
       - ${MOVIES_PATH}:/movies
-      - ${TV_PATH}:/tv #optional
+      - ${TV_PATH}:/tv
     ports:
       - 6767:6767
     restart: unless-stopped
