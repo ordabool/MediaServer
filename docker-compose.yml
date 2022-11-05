@@ -12,6 +12,7 @@ services:
       - ${JF_CONFIG_PATH}:/config
       - ${TV_PATH}:/data/tvshows
       - ${MOVIES_PATH}:/data/movies
+      - ${SPORTS_PATH}:/data/sports
     ports:
       - 8096:8096
       - 8920:8920 #optional
@@ -95,6 +96,11 @@ services:
       - 8080:8080
     restart: unless-stopped
     # username/password is admin/adminadmin
+
+  sportyfin:
+    build: ./sportyfin
+    volumes:
+      - ${SPORTS_PATH}:/sportyfin/output
 
   server:
     image: nginx
