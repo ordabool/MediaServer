@@ -40,6 +40,7 @@ Aside from Jellyfin, the following tools are included:
 1. Go to http://localhost/movies/, 'Settings' - 'Media Management', click 'Add Root Folder' choose the '/movies' folder and press OK
 1. Enter http://localhost:8080/, from the top bar go to 'Tools' - 'Options' - 'Speed' tab, and set the Upload/Download limit in order to prevent CPU load to get too high. I used the following settings
    ![qBittorrent settings](./images/qbittorrent.png)
+1. Go to http://localhost/subs/, 'Settings' - 'Providers' and click the + button to add subtitles providers
 1. Everything is set for downloading, finally just go to http://localhost and go through Jellyfin's setup process. (If you see 'Select Server', just click on the server, delete it and reload the page)
 
 That's it, enjoy your new media server setup!
