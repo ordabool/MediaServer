@@ -1,6 +1,6 @@
 # Home Media Server
 
-![Jellyfin Demo](./images/jf_demo.png)
+![Jellyfin Demo](./images/jf_demo.jpg)
 
 ## Overview
 

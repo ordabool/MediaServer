@@ -3,3 +3,4 @@ config
 downloads
 movies
 tv
+.DS_Store
