@@ -1,5 +1,7 @@
 # Home Media Server
 
+### **For Educational Purposes Only**
+
 ![Jellyfin Demo](./images/jf_demo.jpg)
 
 ## Overview
