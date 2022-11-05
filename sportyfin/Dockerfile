@@ -2,6 +2,7 @@ FROM python:3.8-slim-buster
 
 WORKDIR /sportyfin
 
-RUN pip install sportyfin==1.0.7 --no-binary=sportyfin
+COPY ./requirements.txt /sportyfin/
+RUN pip install -r requirements.txt
 
-CMD [ "python3", "-m" , "sportyfin", "run", "-a", "-o", "/sportyfin/output"]
+CMD [ "python3", "-m" , "sportyfin", "run", "-ef", "-o", "/sportyfin/output" ]
