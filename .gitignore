@@ -4,3 +4,4 @@ config
 downloads
 movies
 tv
+.env
