@@ -12,6 +12,8 @@ services:
       - ${JF_CONFIG_PATH}:/config
       - ${TV_PATH}:/data/tvshows
       - ${MOVIES_PATH}:/data/movies
+      - ${BOOKS_PATH}:/data/books
+      - ${COMICS_PATH}:/data/comics
     ports:
       - 8096:8096
       - 8920:8920 #optional
@@ -62,6 +64,36 @@ services:
       - ${TV_PATH}:/tv
     ports:
       - 6767:6767
+    restart: unless-stopped
+
+  mylar3:
+    image: linuxserver/mylar3:latest
+    container_name: mylar3
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${MYLAR3_CONFIG_PATH}:/config
+      - ${COMICS_PATH}:/comics
+      - ${DOWNLOADS_PATH}:/downloads
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+
+  readarr:
+    image: linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${READARR_CONFIG_PATH}:/config
+      - ${BOOKS_PATH}:/books
+      - ${DOWNLOADS_PATH}:/downloads
+    ports:
+      - 8787:8787
     restart: unless-stopped
 
   prowlarr:
