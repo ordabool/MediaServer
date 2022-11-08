@@ -12,6 +12,8 @@ services:
       - ${JF_CONFIG_PATH}:/config
       - ${TV_PATH}:/data/tvshows
       - ${MOVIES_PATH}:/data/movies
+      - ${ANIME_PATH}:/data/anime
+      - ${ANIME_MOVIES_PATH}:/data/anime_movies
     ports:
       - 8096:8096
       - 8920:8920 #optional
@@ -29,6 +31,7 @@ services:
     volumes:
       - ${SONARR_CONFIG_PATH}:/config
       - ${TV_PATH}:/tv
+      - ${ANIME_PATH}:/anime
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 8989:8989
@@ -44,6 +47,7 @@ services:
     volumes:
       - ${RADARR_CONFIG_PATH}:/config
       - ${MOVIES_PATH}:/movies
+      - ${ANIME_MOVIES_PATH}:/anime_movies
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 7878:7878
@@ -59,6 +63,8 @@ services:
     volumes:
       - ${BAZARR_CONFIG_PATH}:/config
       - ${MOVIES_PATH}:/movies
+      - ${ANIME_MOVIES_PATH}:/anime_movies
+      - ${ANIME_PATH}:/anime
       - ${TV_PATH}:/tv
     ports:
       - 6767:6767
