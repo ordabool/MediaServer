@@ -14,6 +14,7 @@ services:
       - ${MOVIES_PATH}:/data/movies
       - ${BOOKS_PATH}:/data/books
       - ${COMICS_PATH}:/data/comics
+      - ${MUSIC_PATH}:/data/music
       - ${ANIME_PATH}:/data/anime
       - ${ANIME_MOVIES_PATH}:/data/anime_movies
     ports:
@@ -100,6 +101,21 @@ services:
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 8787:8787
+    restart: unless-stopped
+
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LIDARR_CONFIG_PATH}:/config
+      - ${MUSIC_PATH}:/music
+      - ${DOWNLOADS_PATH}:/downloads
+    ports:
+      - 8686:8686
     restart: unless-stopped
 
   prowlarr:

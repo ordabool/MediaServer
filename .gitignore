@@ -4,4 +4,6 @@ config
 downloads
 movies
 tv
+music
+sports
 .env
