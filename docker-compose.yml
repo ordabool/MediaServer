@@ -9,6 +9,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
+      # - './extras/web-interface/dist:/usr/share/jellyfin/web:ro'
       - ${JF_CONFIG_PATH}:/config
       - ${TV_PATH}:/data/tvshows
       - ${MOVIES_PATH}:/data/movies
