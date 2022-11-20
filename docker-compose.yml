@@ -153,6 +153,7 @@ services:
 
   server:
     image: nginx
+    container_name: mediaserver
     volumes:
       - ./nginx:/etc/nginx/conf.d
     ports:
