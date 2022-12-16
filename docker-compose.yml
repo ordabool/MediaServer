@@ -132,6 +132,29 @@ services:
       - 9696:9696
     restart: unless-stopped
 
+  tdarr:
+    image: haveagitgat/tdarr_aio
+    container_name: tdarr
+    ports:
+    -  8265:8265
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+    - ${TDARR_CONFIG_PATH}/config:/home/Tdarr/Documents/Tdarr
+    - ${TDARR_CONFIG_PATH}/db:/var/lib/mongodb
+    - ${TDARR_TRANSCODE_PATH}:/home/Tdarr/cache
+    - ${TDARR_OUTPUT_PATH}:/home/Tdarr/output
+    - /etc/localtime:/etc/localtime:ro
+
+    # Media Paths
+    - ${TV_PATH}:/home/Tdarr/media/tvshows
+    - ${MOVIES_PATH}:/home/Tdarr/media/movies
+    - ${MUSIC_PATH}:/home/Tdarr/media/music
+    - ${ANIME_PATH}:/home/Tdarr/media/anime
+    - ${ANIME_MOVIES_PATH}:/home/Tdarr/media/anime_movies
+
   qbittorrent:
     image: linuxserver/qbittorrent
     container_name: qbittorrent
