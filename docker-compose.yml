@@ -155,6 +155,28 @@ services:
     - ${ANIME_PATH}:/home/Tdarr/media/anime
     - ${ANIME_MOVIES_PATH}:/home/Tdarr/media/anime_movies
 
+  unmanic:
+    image: josh5/unmanic
+    container_name: unmanic
+    ports:
+    -  8888:8888
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+    - ${UNMANIC_CONFIG_PATH}/config:/config
+    - ${UNMANIC_TRANSCODE_PATH}:/tmp/unmanic
+    - ${UNMANIC_OUTPUT_PATH}:/library/output
+    - ${TRANSCODE_TEST_PATH}:/library/test
+
+    # Media Paths
+    - ${TV_PATH}:/library/tvshows
+    - ${MOVIES_PATH}:/library/movies
+    - ${MUSIC_PATH}:/library/music
+    - ${ANIME_PATH}:/library/anime
+    - ${ANIME_MOVIES_PATH}:/library/anime_movies
+
   qbittorrent:
     image: linuxserver/qbittorrent
     container_name: qbittorrent
