@@ -23,7 +23,7 @@ services:
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
-    restart: unless-stopped
+    restart: always
 
   sonarr:
     image: linuxserver/sonarr
@@ -39,7 +39,7 @@ services:
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 8989:8989
-    restart: unless-stopped
+    restart: always
 
   radarr:
     image: linuxserver/radarr
@@ -55,7 +55,7 @@ services:
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 7878:7878
-    restart: unless-stopped
+    restart: always
 
   bazarr:
     image: linuxserver/bazarr
@@ -72,7 +72,7 @@ services:
       - ${TV_PATH}:/tv
     ports:
       - 6767:6767
-    restart: unless-stopped
+    restart: always
 
   mylar3:
     image: linuxserver/mylar3:latest
@@ -87,7 +87,7 @@ services:
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 8090:8090
-    restart: unless-stopped
+    restart: always
 
   readarr:
     image: linuxserver/readarr:develop
@@ -102,7 +102,7 @@ services:
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 8787:8787
-    restart: unless-stopped
+    restart: always
 
   lidarr:
     image: linuxserver/lidarr:latest
@@ -117,7 +117,7 @@ services:
       - ${DOWNLOADS_PATH}:/downloads
     ports:
       - 8686:8686
-    restart: unless-stopped
+    restart: always
 
   prowlarr:
     image: linuxserver/prowlarr:develop
@@ -130,30 +130,7 @@ services:
       - ${PROWLARR_CONFIG_PATH}:/config
     ports:
       - 9696:9696
-    restart: unless-stopped
-
-  tdarr:
-    image: haveagitgat/tdarr_aio
-    container_name: tdarr
-    ports:
-    -  8265:8265
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-    - ${TDARR_CONFIG_PATH}/config:/home/Tdarr/Documents/Tdarr
-    - ${TDARR_CONFIG_PATH}/db:/var/lib/mongodb
-    - ${TDARR_TRANSCODE_PATH}:/home/Tdarr/cache
-    - ${TDARR_OUTPUT_PATH}:/home/Tdarr/output
-    - /etc/localtime:/etc/localtime:ro
-
-    # Media Paths
-    - ${TV_PATH}:/home/Tdarr/media/tvshows
-    - ${MOVIES_PATH}:/home/Tdarr/media/movies
-    - ${MUSIC_PATH}:/home/Tdarr/media/music
-    - ${ANIME_PATH}:/home/Tdarr/media/anime
-    - ${ANIME_MOVIES_PATH}:/home/Tdarr/media/anime_movies
+    restart: always
 
   unmanic:
     image: josh5/unmanic
@@ -193,13 +170,14 @@ services:
       - 6881:6881
       - 6881:6881/udp
       - 8080:8080
-    restart: unless-stopped
+    restart: always
     # username/password is admin/adminadmin
 
   server:
     image: nginx
+    restart: always
     container_name: mediaserver
     volumes:
       - ./nginx:/etc/nginx/conf.d
     ports:
-    - 80:80
+      - 80:80
