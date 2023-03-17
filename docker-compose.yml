@@ -8,14 +8,11 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
-      # - './extras/web-interface/dist:/usr/share/jellyfin/web:ro'
       - ${JF_CONFIG_PATH}:/config
       - ${TV_PATH}:/data/tvshows
       - ${MOVIES_PATH}:/data/movies
-      - ${BOOKS_PATH}:/data/books
-      - ${COMICS_PATH}:/data/comics
-      - ${MUSIC_PATH}:/data/music
       - ${ANIME_PATH}:/data/anime
       - ${ANIME_MOVIES_PATH}:/data/anime_movies
     ports:
@@ -32,11 +29,12 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
       - ${SONARR_CONFIG_PATH}:/config
-      - ${TV_PATH}:/tv
-      - ${ANIME_PATH}:/anime
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${TV_PATH}:/data/tv
+      - ${ANIME_PATH}:/data/anime
+      - ${DOWNLOADS_PATH}:/data/downloads
     ports:
       - 8989:8989
     restart: always
@@ -48,11 +46,12 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
       - ${RADARR_CONFIG_PATH}:/config
-      - ${MOVIES_PATH}:/movies
-      - ${ANIME_MOVIES_PATH}:/anime_movies
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${MOVIES_PATH}:/data/movies
+      - ${ANIME_MOVIES_PATH}:/data/anime_movies
+      - ${DOWNLOADS_PATH}:/data/downloads
     ports:
       - 7878:7878
     restart: always
@@ -64,59 +63,15 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
       - ${BAZARR_CONFIG_PATH}:/config
-      - ${MOVIES_PATH}:/movies
-      - ${ANIME_MOVIES_PATH}:/anime_movies
-      - ${ANIME_PATH}:/anime
-      - ${TV_PATH}:/tv
+      - ${MOVIES_PATH}:/data/movies
+      - ${ANIME_MOVIES_PATH}:/data/anime_movies
+      - ${ANIME_PATH}:/data/anime
+      - ${TV_PATH}:/data/tv
     ports:
       - 6767:6767
-    restart: always
-
-  mylar3:
-    image: linuxserver/mylar3:latest
-    container_name: mylar3
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${MYLAR3_CONFIG_PATH}:/config
-      - ${COMICS_PATH}:/comics
-      - ${DOWNLOADS_PATH}:/downloads
-    ports:
-      - 8090:8090
-    restart: always
-
-  readarr:
-    image: linuxserver/readarr:develop
-    container_name: readarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${READARR_CONFIG_PATH}:/config
-      - ${BOOKS_PATH}:/books
-      - ${DOWNLOADS_PATH}:/downloads
-    ports:
-      - 8787:8787
-    restart: always
-
-  lidarr:
-    image: linuxserver/lidarr:latest
-    container_name: lidarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${LIDARR_CONFIG_PATH}:/config
-      - ${MUSIC_PATH}:/music
-      - ${DOWNLOADS_PATH}:/downloads
-    ports:
-      - 8686:8686
     restart: always
 
   prowlarr:
@@ -126,33 +81,12 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
       - ${PROWLARR_CONFIG_PATH}:/config
     ports:
       - 9696:9696
     restart: always
-
-  unmanic:
-    image: josh5/unmanic
-    container_name: unmanic
-    ports:
-    -  8888:8888
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-    - ${UNMANIC_CONFIG_PATH}/config:/config
-    - ${UNMANIC_TRANSCODE_PATH}:/tmp/unmanic
-    - ${UNMANIC_OUTPUT_PATH}:/library/output
-    - ${TRANSCODE_TEST_PATH}:/library/test
-
-    # Media Paths
-    - ${TV_PATH}:/library/tvshows
-    - ${MOVIES_PATH}:/library/movies
-    - ${MUSIC_PATH}:/library/music
-    - ${ANIME_PATH}:/library/anime
-    - ${ANIME_MOVIES_PATH}:/library/anime_movies
 
   qbittorrent:
     image: linuxserver/qbittorrent
@@ -161,11 +95,11 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - UMASK_SET=022
+      - UMASK_SET=002
       - WEBUI_PORT=8080
     volumes:
       - ${QBITTORRENT_CONFIG_PATH}:/config
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${DOWNLOADS_PATH}:/data/downloads
     ports:
       - 6881:6881
       - 6881:6881/udp
