@@ -11,10 +11,7 @@ services:
       - UMASK=002
     volumes:
       - ${JF_CONFIG_PATH}:/config
-      - ${TV_PATH}:/data/tvshows
-      - ${MOVIES_PATH}:/data/movies
-      - ${ANIME_PATH}:/data/anime
-      - ${ANIME_MOVIES_PATH}:/data/anime_movies
+      - ${DATA_PATH}:/data
     ports:
       - 8096:8096
       - 8920:8920
@@ -32,9 +29,7 @@ services:
       - UMASK=002
     volumes:
       - ${SONARR_CONFIG_PATH}:/config
-      - ${TV_PATH}:/data/tv
-      - ${ANIME_PATH}:/data/anime
-      - ${DOWNLOADS_PATH}:/data/downloads
+      - ${DATA_PATH}:/data
     ports:
       - 8989:8989
     restart: always
@@ -49,9 +44,7 @@ services:
       - UMASK=002
     volumes:
       - ${RADARR_CONFIG_PATH}:/config
-      - ${MOVIES_PATH}:/data/movies
-      - ${ANIME_MOVIES_PATH}:/data/anime_movies
-      - ${DOWNLOADS_PATH}:/data/downloads
+      - ${DATA_PATH}:/data
     ports:
       - 7878:7878
     restart: always
@@ -66,10 +59,7 @@ services:
       - UMASK=002
     volumes:
       - ${BAZARR_CONFIG_PATH}:/config
-      - ${MOVIES_PATH}:/data/movies
-      - ${ANIME_MOVIES_PATH}:/data/anime_movies
-      - ${ANIME_PATH}:/data/anime
-      - ${TV_PATH}:/data/tv
+      - ${DATA_PATH}:/data
     ports:
       - 6767:6767
     restart: always
@@ -99,13 +89,13 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ${QBITTORRENT_CONFIG_PATH}:/config
-      - ${DOWNLOADS_PATH}:/data/downloads
+      - ${DATA_PATH}:/data
     ports:
       - 6881:6881
       - 6881:6881/udp
       - 8080:8080
     restart: always
-    # username/password is admin/adminadmin
+    # default username/password is admin/adminadmin
 
   server:
     image: nginx
