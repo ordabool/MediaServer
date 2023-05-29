@@ -1,0 +1,2 @@
+transcode arguments:
+,-c:v h264_nvenc -pix_fmt yuv420p -profile:v high -pixel_format yuv444p -preset slow -codec:a aac

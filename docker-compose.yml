@@ -9,6 +9,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+      - NVIDIA_VISIBLE_DEVICES=all
     volumes:
       - ${JF_CONFIG_PATH}:/config
       - ${DATA_PATH}:/data
@@ -18,6 +19,13 @@ services:
       - 7359:7359/udp
       - 1900:1900/udp
     restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   sonarr:
     image: linuxserver/sonarr
@@ -96,6 +104,31 @@ services:
       - 8080:8080
     restart: always
     # default username/password is admin/adminadmin
+
+  tdarr:
+    image: haveagitgat/tdarr_aio
+    container_name: tdarr
+    ports:
+    -  8265:8265
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - ${TDARR_CONFIG_PATH}/config:/home/Tdarr/Documents/Tdarr
+    - ${TDARR_CONFIG_PATH}/db:/var/lib/mongodb
+    - ${TDARR_TRANSCODE_PATH}:/home/Tdarr/cache
+    - ${TDARR_OUTPUT_PATH}:/home/Tdarr/output
+    - /etc/localtime:/etc/localtime:ro
+    - ${DATA_PATH}:/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   server:
     image: nginx
