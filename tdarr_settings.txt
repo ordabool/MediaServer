@@ -1,2 +1,12 @@
 transcode arguments:
 ,-c:v h264_nvenc -pix_fmt yuv420p -profile:v high -pixel_format yuv444p -preset slow -codec:a aac
+
+Best:
+ffmpeg -i Puss.in.Boots.The.Last.Wish.2022.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT.mkv -c:v h264_nvenc -pix_fmt yuv420p -preset p4 -rc constqp -qp 17 -codec:a aac test3.mp4
+
+Take 'map' for all audio and video channels:
+ffmpeg -i Puss.in.Boots.The.Last.Wish.2022.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT.mkv -c:v h264_nvenc -pix_fmt yuv420p -preset p7 -map 0:v -map 0:a -codec:a aac -sn test.mp4
+
+Extract subs:
+ffmpeg -i Puss.in.Boots.The.Last.Wish.2022.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT.mkv -map 0:s:0 Puss.in.Boots.The.Last.Wish.2022.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT.eng.srt
+
