@@ -2,8 +2,6 @@
 
 ### **For Educational Purposes Only**
 
-![Jellyfin Demo](./images/jf_demo.jpg)
-
 ## Overview
 
 In this project we will set up a home media server using [Jellyfin](https://github.com/jellyfin/jellyfin) as the frontend.
