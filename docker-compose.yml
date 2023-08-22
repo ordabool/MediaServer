@@ -13,6 +13,7 @@ services:
     volumes:
       - ${JF_CONFIG_PATH}:/config
       - ${DATA_PATH}:/data
+      - './extras/dist:/usr/share/jellyfin/web:ro'
     ports:
       - 8096:8096
       - 8920:8920
@@ -160,3 +161,30 @@ services:
     command: sphinx-autobuild -a --host 0.0.0.0 --port 8000 /sphinx/source /build
     ports:
       - 7000:8000
+
+  filebrowser:
+    # Default username & pass are 'admin'
+    image: hurlenko/filebrowser
+    container_name: filebrowser
+    ports:
+      - 7654:8080
+    volumes:
+      - ${DATA_PATH}:/data
+      - ${FILEBROWSER_CONFIG_PATH}:/config
+    environment:
+      - FB_BASEURL=/filebrowser
+    restart: always
+
+  jellyseerr:
+      image: fallenbagel/jellyseerr:latest
+      container_name: jellyseerr
+      environment:
+          - LOG_LEVEL=debug
+          - PUID=${PUID}
+          - PGID=${PGID}
+          - TZ=${TZ}
+      ports:
+          - 5055:5055
+      volumes:
+          - ${JELLYSEERR_CONFIG_PATH}:/app/config
+      restart: always
