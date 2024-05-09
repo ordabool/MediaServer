@@ -1,31 +1,27 @@
 version: "2"
 
 services:
-  jellyfin:
-    image: linuxserver/jellyfin
-    container_name: jellyfin
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - UMASK=002
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
       - NVIDIA_VISIBLE_DEVICES=all
     volumes:
-      - ${JF_CONFIG_PATH}:/config
+      - ${PLEX_CONFIG_PATH}:/config
       - ${DATA_PATH}:/data
-      - './extras/dist:/usr/share/jellyfin/web:ro'
-    ports:
-      - 8096:8096
-      - 8920:8920
-      - 7359:7359/udp
-      - 1900:1900/udp
     restart: always
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              count: all
               capabilities: [gpu]
 
   sonarr:
@@ -128,7 +124,7 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              count: all
               capabilities: [gpu]
 
   server:
@@ -175,16 +171,15 @@ services:
       - FB_BASEURL=/filebrowser
     restart: always
 
-  jellyseerr:
-      image: fallenbagel/jellyseerr:latest
-      container_name: jellyseerr
-      environment:
-          - LOG_LEVEL=debug
-          - PUID=${PUID}
-          - PGID=${PGID}
-          - TZ=${TZ}
-      ports:
-          - 5055:5055
-      volumes:
-          - ${JELLYSEERR_CONFIG_PATH}:/app/config
-      restart: always
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${OVERSEERR_CONFIG_PATH}:/config
+    ports:
+      - 5055:5055
+    restart: always
