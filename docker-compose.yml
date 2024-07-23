@@ -216,3 +216,18 @@ services:
       - 64702:64702/udp
       - 3003:3003
     restart: always
+
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    container_name: kavita
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - ${KAVITA_CONFIG_PATH}:/config
+      - ${DATA_PATH}:/data
+    ports:
+      - 5000:5000
+    restart: always
