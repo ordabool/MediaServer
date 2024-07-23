@@ -96,8 +96,8 @@ services:
       - ${QBITTORRENT_CONFIG_PATH}:/config
       - ${DATA_PATH}:/data
     ports:
-      - 6881:6881
-      - 6881:6881/udp
+      - 49427:49427
+      - 49427:49427/udp
       - 8080:8080
     restart: always
     # default username/password is admin/adminadmin
@@ -182,4 +182,37 @@ services:
       - ${OVERSEERR_CONFIG_PATH}:/config
     ports:
       - 5055:5055
+    restart: always
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      # - ./audiobooks:/audiobooks
+      # - ./podcasts:/podcasts
+      - ${DATA_PATH}:/data
+      - ${AUDIOBOOKSHELF_METADATA_PATH}:/metadata
+      - ${AUDIOBOOKSHELF_CONFIG_PATH}:/config
+    restart: always
+    environment:
+     - user=${PUID}:${PGID}
+
+  private_qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: private_qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK_SET=002
+      - WEBUI_PORT=3003
+    volumes:
+      - ${PRIVATE_QBITTORRENT_CONFIG_PATH}:/config
+      - ${DATA_PATH}:/data
+    ports:
+      - 64702:64702
+      - 64702:64702/udp
+      - 3003:3003
     restart: always
