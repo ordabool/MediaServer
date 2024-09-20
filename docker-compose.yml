@@ -231,3 +231,35 @@ services:
     ports:
       - 5000:5000
     restart: always
+
+  # RustDesk servers
+  hbbs:
+    container_name: hbbs
+    image: rustdesk/rustdesk-server:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    command: hbbs
+    volumes:
+      - ${RUSTDESK_CONFIG_PATH}:/root
+    network_mode: "host"
+
+    depends_on:
+      - hbbr
+    restart: unless-stopped
+
+  hbbr:
+    container_name: hbbr
+    image: rustdesk/rustdesk-server:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    command: hbbr
+    volumes:
+      - ${RUSTDESK_CONFIG_PATH}:/root
+    network_mode: "host"
+    restart: unless-stopped
