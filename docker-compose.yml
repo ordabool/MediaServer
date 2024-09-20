@@ -83,6 +83,18 @@ services:
       - 9696:9696
     restart: always
 
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    ports:
+      - 8191:8191
+    restart: always
+
   qbittorrent:
     image: linuxserver/qbittorrent
     container_name: qbittorrent
