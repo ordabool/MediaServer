@@ -202,8 +202,6 @@ services:
     ports:
       - 13378:80
     volumes:
-      # - ./audiobooks:/audiobooks
-      # - ./podcasts:/podcasts
       - ${DATA_PATH}:/data
       - ${AUDIOBOOKSHELF_METADATA_PATH}:/metadata
       - ${AUDIOBOOKSHELF_CONFIG_PATH}:/config
@@ -257,7 +255,6 @@ services:
     volumes:
       - ${RUSTDESK_CONFIG_PATH}:/root
     network_mode: "host"
-
     depends_on:
       - hbbr
     restart: unless-stopped
@@ -275,3 +272,28 @@ services:
       - ${RUSTDESK_CONFIG_PATH}:/root
     network_mode: "host"
     restart: unless-stopped
+
+# Owlbear Rodeo Legacy VTT
+  bvtt:
+    build: ./owlbear-rodeo-legacy/backend/
+    container_name: bvtt
+    stop_grace_period: 30s
+    init: true
+    ports: 
+      - 9000:9000
+    environment:
+      PORT: 9000
+      ALLOW_ORIGIN: ".*"
+
+  vtt:
+    container_name: vtt
+    build: 
+      context: ./owlbear-rodeo-legacy/
+    depends_on:
+      - bvtt
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_BROKER_URL: "https://bvtt.jellybeb.com"
+      REACT_APP_VERSION: "1.10.2"
+      REACT_APP_MAINTENANCE: "false"

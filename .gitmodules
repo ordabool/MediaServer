@@ -1,0 +1,3 @@
+[submodule "owlbear-rodeo-legacy"]
+	path = owlbear-rodeo-legacy
+	url = git@github.com:owlbear-rodeo/owlbear-rodeo-legacy.git
