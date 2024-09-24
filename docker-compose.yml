@@ -227,19 +227,95 @@ services:
       - 3003:3003
     restart: always
 
-  kavita:
-    image: lscr.io/linuxserver/kavita:latest
-    container_name: kavita
+  # Defaults - Username: admin Password: admin123
+  calibre-fiction:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-fiction
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
     volumes:
-      - ${KAVITA_CONFIG_PATH}:/config
+      - ${CALIBRE_WEB_CONFIG_PATH}/fiction:/config
       - ${DATA_PATH}:/data
-    ports:
-      - 5000:5000
+    restart: always
+
+  calibre-nonfiction:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-nonfiction
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ${CALIBRE_WEB_CONFIG_PATH}/nonfiction:/config
+      - ${DATA_PATH}:/data
+    restart: always
+
+  calibre-ttrpg:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-ttrpg
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ${CALIBRE_WEB_CONFIG_PATH}/ttrpg:/config
+      - ${DATA_PATH}:/data
+    restart: always
+
+  calibre-textbooks:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-textbooks
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ${CALIBRE_WEB_CONFIG_PATH}/textbooks:/config
+      - ${DATA_PATH}:/data
+    restart: always
+
+  calibre-manga:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-manga
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ${CALIBRE_WEB_CONFIG_PATH}/manga:/config
+      - ${DATA_PATH}:/data
+    restart: always
+
+  calibre-comics:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-comics
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ${CALIBRE_WEB_CONFIG_PATH}/comics:/config
+      - ${DATA_PATH}:/data
     restart: always
 
   # RustDesk servers
@@ -273,7 +349,7 @@ services:
     network_mode: "host"
     restart: unless-stopped
 
-# Owlbear Rodeo Legacy VTT
+  # Owlbear Rodeo Legacy VTT
   bvtt:
     build: ./owlbear-rodeo-legacy/backend/
     container_name: bvtt
